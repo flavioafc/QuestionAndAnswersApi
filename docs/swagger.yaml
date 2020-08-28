@@ -1,0 +1,96 @@
+basePath: /
+definitions:
+  models.Faq:
+    properties:
+      answer:
+        example: To remove an item click on RemoveItem button
+        type: string
+      id:
+        example: 5f484f697ee3881a0ca9a037
+        type: string
+      question:
+        example: How can I remove an item?
+        type: string
+    type: object
+  models.FaqRequest:
+    properties:
+      answer:
+        example: To remove an item click on RemoveItem button
+        type: string
+      question:
+        example: How can I remove an item?
+        type: string
+    type: object
+host: localhost:3000
+info:
+  contact:
+    email: flavio.costa@swagger.io
+    name: NuOrder API Support
+  description: This is a MVP for Questions and Answers https://www.nuorder.com/ page
+  license:
+    name: Apache 2.0
+    url: https://www.nuorder.com/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: FAQ API
+  version: "1.0"
+paths:
+  /api/v1/faq:
+    get:
+      consumes:
+      - application/json
+      description: Get of all Questions and Answers
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Faq'
+            type: array
+      summary: Get a list to all questions and answers from API
+      tags:
+      - faq
+    post:
+      consumes:
+      - application/json
+      description: Create a new Question and Answer with the input paylod
+      parameters:
+      - description: Create
+        in: body
+        name: faq
+        required: true
+        schema:
+          $ref: '#/definitions/models.FaqRequest'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Faq'
+      summary: Create a new Question and Answer item
+      tags:
+      - faq
+  /api/v1/faq/{id}:
+    get:
+      consumes:
+      - application/json
+      description: Get a question and answer
+      parameters:
+      - description: ObjectId
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Faq'
+      summary: Get one question and answer item from the API
+      tags:
+      - faq
+swagger: "2.0"

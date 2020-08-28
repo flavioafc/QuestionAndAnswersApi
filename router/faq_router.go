@@ -24,14 +24,14 @@ func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
 }
 
 // GetAll godoc
-// @Summary Get a list to all questions and answers from QA API
+// @Summary Get a list to all questions and answers from API
 // @Description Get of all Questions and Answers
 // @Tags faq
 // @Accept  json
 // @Produce  json
-// @Success 200 {array} Faq
-// @Router /faq [get]
-//GetAll list all questions and answers from QA API
+// @Success 200 {array} models.Faq
+// @Router /api/v1/faq [get]
+// GetAll list all questions and answers from QA API
 func GetAll(w http.ResponseWriter, r *http.Request) {
 	faq, err := dao.GetAll()
 	if err != nil {
@@ -41,7 +41,16 @@ func GetAll(w http.ResponseWriter, r *http.Request) {
 	respondWithJSON(w, http.StatusOK, faq)
 }
 
-//GetByID retrieve the question and answer by Id
+// GetByID godoc
+// @Summary Get one question and answer item from the API
+// @Description Get a question and answer
+// @Tags faq
+// @Accept  json
+// @Produce  json
+// @Param id path string true "ObjectId"
+// @Success 200 {object} models.Faq
+// @Router /api/v1/faq/{id} [get]
+// GetByID retrieve the question and answer by Id
 func GetByID(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	faq, err := dao.GetByID(params["id"])
@@ -53,15 +62,15 @@ func GetByID(w http.ResponseWriter, r *http.Request) {
 }
 
 // Create godoc
-// @Summary Create a new Question and Answer
+// @Summary Create a new Question and Answer item
 // @Description Create a new Question and Answer with the input paylod
 // @Tags faq
 // @Accept  json
 // @Produce  json
-// @Param faq body Faq true "Create"
-// @Success 200 {object} Faq
-// @Router /faq [post]
-//Create method insert in the mongo database a new question and answer
+// @Param faq body models.FaqRequest true "Create"
+// @Success 200 {object} models.Faq
+// @Router /api/v1/faq [post]
+// Create method insert in the mongo database a new question and answer
 func Create(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	var faq Faq
@@ -78,7 +87,7 @@ func Create(w http.ResponseWriter, r *http.Request) {
 	respondWithJSON(w, http.StatusCreated, faq)
 }
 
-//Update have to update the question
+// Update have to update the question
 func Update(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	params := mux.Vars(r)
@@ -95,7 +104,7 @@ func Update(w http.ResponseWriter, r *http.Request) {
 	respondWithJSON(w, http.StatusOK, map[string]string{"result": faq.ID.String() + ", was successful updated!"})
 }
 
-//Delete must delete the question
+// Delete must delete the question
 func Delete(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	params := mux.Vars(r)

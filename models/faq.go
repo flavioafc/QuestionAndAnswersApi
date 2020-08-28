@@ -7,3 +7,8 @@ type Faq struct {
 	Question string        `bson:"question" json:"question" example:"How can I remove an item?"`
 	Answer   string        `bson:"answer" json:"answer" example:"To remove an item click on RemoveItem button"`
 }
+
+type FaqRequest struct {
+	Question string `bson:"question" json:"question" example:"How can I remove an item?"`
+	Answer   string `bson:"answer" json:"answer" example:"To remove an item click on RemoveItem button"`
+}

@@ -1,0 +1,143 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "description": "This is a MVP for Questions and Answers https://www.nuorder.com/ page",
+        "title": "FAQ API",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "name": "NuOrder API Support",
+            "email": "flavio.costa@swagger.io"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "https://www.nuorder.com/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0"
+    },
+    "host": "localhost:3000",
+    "basePath": "/",
+    "paths": {
+        "/api/v1/faq": {
+            "get": {
+                "description": "Get of all Questions and Answers",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "faq"
+                ],
+                "summary": "Get a list to all questions and answers from API",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Faq"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new Question and Answer with the input paylod",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "faq"
+                ],
+                "summary": "Create a new Question and Answer item",
+                "parameters": [
+                    {
+                        "description": "Create",
+                        "name": "faq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.FaqRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Faq"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/faq/{id}": {
+            "get": {
+                "description": "Get a question and answer",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "faq"
+                ],
+                "summary": "Get one question and answer item from the API",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ObjectId",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Faq"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "models.Faq": {
+            "type": "object",
+            "properties": {
+                "answer": {
+                    "type": "string",
+                    "example": "To remove an item click on RemoveItem button"
+                },
+                "id": {
+                    "type": "string",
+                    "example": "5f484f697ee3881a0ca9a037"
+                },
+                "question": {
+                    "type": "string",
+                    "example": "How can I remove an item?"
+                }
+            }
+        },
+        "models.FaqRequest": {
+            "type": "object",
+            "properties": {
+                "answer": {
+                    "type": "string",
+                    "example": "To remove an item click on RemoveItem button"
+                },
+                "question": {
+                    "type": "string",
+                    "example": "How can I remove an item?"
+                }
+            }
+        }
+    }
+}

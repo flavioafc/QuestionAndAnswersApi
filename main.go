@@ -9,6 +9,7 @@ import (
 	_ "github.com/flavioafc/go-question-and-answers/docs"
 	faqRouter "github.com/flavioafc/go-question-and-answers/router"
 	"github.com/gorilla/mux"
+	httpSwagger "github.com/swaggo/http-swagger"
 )
 
 var dao = FaqDAO{}
@@ -37,6 +38,7 @@ func main() {
 	r.HandleFunc("/api/v1/faq", faqRouter.Create).Methods("POST")
 	r.HandleFunc("/api/v1/faq/{id}", faqRouter.Update).Methods("PUT")
 	r.HandleFunc("/api/v1/faq/{id}", faqRouter.Delete).Methods("DELETE")
+	r.PathPrefix("/swagger").Handler(httpSwagger.WrapHandler)
 
 	var port = ":3000"
 	fmt.Println("Server running in port:", port)
