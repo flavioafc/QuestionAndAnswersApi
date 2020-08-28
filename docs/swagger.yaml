@@ -24,13 +24,13 @@ definitions:
 host: localhost:3000
 info:
   contact:
-    email: flavio.costa@swagger.io
+    email: flavio.costa@ecore.com.br
     name: NuOrder API Support
-  description: This is a MVP for Questions and Answers https://www.nuorder.com/ page
+  description: This is a MVP for Questions and Answers for https://www.nuorder.com/ page
   license:
     name: Apache 2.0
     url: https://www.nuorder.com/licenses/LICENSE-2.0.html
-  termsOfService: http://swagger.io/terms/
+  termsOfService: https://www.nuorder.com/
   title: FAQ API
   version: "1.0"
 paths:
@@ -38,7 +38,7 @@ paths:
     get:
       consumes:
       - application/json
-      description: Get of all Questions and Answers
+      description: Get a list of all questions and answers
       produces:
       - application/json
       responses:
@@ -73,6 +73,24 @@ paths:
       tags:
       - faq
   /api/v1/faq/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a question and answer
+      parameters:
+      - description: ObjectId
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 'result: success'
+      summary: Delete one question and answer item from the API
+      tags:
+      - faq
     get:
       consumes:
       - application/json

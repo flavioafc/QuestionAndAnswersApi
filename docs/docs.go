@@ -18,10 +18,10 @@ var doc = `{
     "info": {
         "description": "{{.Description}}",
         "title": "{{.Title}}",
-        "termsOfService": "http://swagger.io/terms/",
+        "termsOfService": "https://www.nuorder.com/",
         "contact": {
             "name": "NuOrder API Support",
-            "email": "flavio.costa@swagger.io"
+            "email": "flavio.costa@ecore.com.br"
         },
         "license": {
             "name": "Apache 2.0",
@@ -34,7 +34,7 @@ var doc = `{
     "paths": {
         "/api/v1/faq": {
             "get": {
-                "description": "Get of all Questions and Answers",
+                "description": "Get a list of all questions and answers",
                 "consumes": [
                     "application/json"
                 ],
@@ -156,6 +156,33 @@ var doc = `{
                         "description": "ObjectIdHex(id), was successful updated!"
                     }
                 }
+            },
+            "delete": {
+                "description": "Delete a question and answer",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "faq"
+                ],
+                "summary": "Delete one question and answer item from the API",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ObjectId",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "result: success"
+                    }
+                }
             }
         }
     },
@@ -209,7 +236,7 @@ var SwaggerInfo = swaggerInfo{
 	BasePath:    "/",
 	Schemes:     []string{},
 	Title:       "FAQ API",
-	Description: "This is a MVP for Questions and Answers https://www.nuorder.com/ page",
+	Description: "This is a MVP for Questions and Answers for https://www.nuorder.com/ page",
 }
 
 type s struct{}

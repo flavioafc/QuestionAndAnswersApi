@@ -25,7 +25,7 @@ func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
 
 // GetAll godoc
 // @Summary Get a list to all questions and answers from API
-// @Description Get of all Questions and Answers
+// @Description Get a list of all questions and answers
 // @Tags faq
 // @Accept  json
 // @Produce  json
@@ -114,6 +114,15 @@ func Update(w http.ResponseWriter, r *http.Request) {
 	respondWithJSON(w, http.StatusOK, map[string]string{"result": faq.ID.String() + ", was successful updated!"})
 }
 
+// Delete godoc
+// @Summary Delete one question and answer item from the API
+// @Description Delete a question and answer
+// @Tags faq
+// @Accept  json
+// @Produce  json
+// @Param id path string true "ObjectId"
+// @Success 200 "result: success"
+// @Router /api/v1/faq/{id} [delete]
 // Delete must delete the question
 func Delete(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
