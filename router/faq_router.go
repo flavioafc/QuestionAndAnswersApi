@@ -23,6 +23,14 @@ func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
 	w.Write(response)
 }
 
+// GetAll godoc
+// @Summary Get a list to all questions and answers from QA API
+// @Description Get of all Questions and Answers
+// @Tags faq
+// @Accept  json
+// @Produce  json
+// @Success 200 {array} Faq
+// @Router /faq [get]
 //GetAll list all questions and answers from QA API
 func GetAll(w http.ResponseWriter, r *http.Request) {
 	faq, err := dao.GetAll()
@@ -44,6 +52,15 @@ func GetByID(w http.ResponseWriter, r *http.Request) {
 	respondWithJSON(w, http.StatusOK, faq)
 }
 
+// Create godoc
+// @Summary Create a new Question and Answer
+// @Description Create a new Question and Answer with the input paylod
+// @Tags faq
+// @Accept  json
+// @Produce  json
+// @Param faq body Faq true "Create"
+// @Success 200 {object} Faq
+// @Router /faq [post]
 //Create method insert in the mongo database a new question and answer
 func Create(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
