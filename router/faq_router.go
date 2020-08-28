@@ -87,6 +87,16 @@ func Create(w http.ResponseWriter, r *http.Request) {
 	respondWithJSON(w, http.StatusCreated, faq)
 }
 
+// Update godoc
+// @Summary Update a new Question and Answer item
+// @Description Update a new Question and Answer with the input paylod
+// @Tags faq
+// @Accept  json
+// @Produce  json
+// @Param id path string true "ObjectId"
+// @Param faq body models.Faq true "Update"
+// @Success 200 "ObjectIdHex(id), was successful updated!"
+// @Router /api/v1/faq/{id} [put]
 // Update have to update the question
 func Update(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()

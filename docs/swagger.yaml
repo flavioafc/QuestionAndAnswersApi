@@ -93,4 +93,28 @@ paths:
       summary: Get one question and answer item from the API
       tags:
       - faq
+    put:
+      consumes:
+      - application/json
+      description: Update a new Question and Answer with the input paylod
+      parameters:
+      - description: ObjectId
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Update
+        in: body
+        name: faq
+        required: true
+        schema:
+          $ref: '#/definitions/models.Faq'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ObjectIdHex(id), was successful updated!
+      summary: Update a new Question and Answer item
+      tags:
+      - faq
 swagger: "2.0"

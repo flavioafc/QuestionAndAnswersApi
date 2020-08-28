@@ -120,6 +120,42 @@ var doc = `{
                         }
                     }
                 }
+            },
+            "put": {
+                "description": "Update a new Question and Answer with the input paylod",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "faq"
+                ],
+                "summary": "Update a new Question and Answer item",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ObjectId",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update",
+                        "name": "faq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Faq"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ObjectIdHex(id), was successful updated!"
+                    }
+                }
             }
         }
     },
