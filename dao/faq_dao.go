@@ -16,7 +16,7 @@ type FaqDAO struct {
 var db *mgo.Database
 
 const (
-	COLLECTION = "Faq"
+	COLLECTION = "QuestionAnswers"
 )
 
 func (m *FaqDAO) Connect() {

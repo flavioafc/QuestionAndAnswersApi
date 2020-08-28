@@ -13,10 +13,10 @@ import (
 var dao = FaqDAO{}
 
 func respondWithError(w http.ResponseWriter, code int, msg string) {
-	responseJSON(w, code, map[string]string{"error": msg})
+	respondWithJSON(w, code, map[string]string{"error": msg})
 }
 
-func responseJSON(w http.ResponseWriter, code int, payload interface{}) {
+func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
 	response, _ := json.Marshal(payload)
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(code)
@@ -30,7 +30,7 @@ func GetAll(w http.ResponseWriter, r *http.Request) {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
-	responseJSON(w, http.StatusOK, faq)
+	respondWithJSON(w, http.StatusOK, faq)
 }
 
 //GetByID retrieve the question and answer by Id
@@ -41,15 +41,16 @@ func GetByID(w http.ResponseWriter, r *http.Request) {
 		respondWithError(w, http.StatusBadRequest, "Invalid QA ID")
 		return
 	}
-	responseJSON(w, http.StatusOK, faq)
+	respondWithJSON(w, http.StatusOK, faq)
 }
 
 //Create method insert in the mongo database a new question and answer
 func Create(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	var faq Faq
+
 	if err := json.NewDecoder(r.Body).Decode(&faq); err != nil {
-		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
+		respondWithError(w, http.StatusBadRequest, "Invalid request")
 		return
 	}
 	faq.ID = bson.NewObjectId()
@@ -57,23 +58,24 @@ func Create(w http.ResponseWriter, r *http.Request) {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
-	responseJSON(w, http.StatusCreated, faq)
+	respondWithJSON(w, http.StatusCreated, faq)
 }
 
 //Update have to update the question
 func Update(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	params := mux.Vars(r)
+
 	var faq Faq
 	if err := json.NewDecoder(r.Body).Decode(&faq); err != nil {
-		respondWithError(w, http.StatusBadRequest, "Invalid request payload")
+		respondWithError(w, http.StatusBadRequest, "Invalid request")
 		return
 	}
 	if err := dao.Update(params["id"], faq); err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
-	responseJSON(w, http.StatusOK, map[string]string{"result": faq.Question + " atualizado com sucesso!"})
+	respondWithJSON(w, http.StatusOK, map[string]string{"result": faq.ID.String() + ", was successful updated!"})
 }
 
 //Delete must delete the question
@@ -84,5 +86,5 @@ func Delete(w http.ResponseWriter, r *http.Request) {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
-	responseJSON(w, http.StatusOK, map[string]string{"result": "success"})
+	respondWithJSON(w, http.StatusOK, map[string]string{"result": "success"})
 }
