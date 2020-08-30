@@ -1,23 +1,36 @@
 basePath: /
 definitions:
-  models.Faq:
+  models.Answer:
     properties:
       answer:
-        example: To remove an item click on RemoveItem button
-        type: string
+        items:
+          $ref: '#/definitions/models.Answer'
+        type: array
       id:
+        example: 7f484f697ee1283a0ca5a028
+        type: string
+      likes:
+        example: 10
+        type: integer
+      parent:
         example: 5f484f697ee3881a0ca9a037
         type: string
-      question:
+      text:
         example: How can I remove an item?
         type: string
     type: object
-  models.FaqRequest:
+  models.Question:
     properties:
-      answer:
-        example: To remove an item click on RemoveItem button
+      id:
+        example: 5f484f697ee3881a0ca9a037
         type: string
-      question:
+      image:
+        example: http://nuorder.com/images/image.jpg
+        type: string
+      likes:
+        example: 30
+        type: integer
+      text:
         example: How can I remove an item?
         type: string
     type: object
@@ -34,7 +47,7 @@ info:
   title: FAQ API
   version: "1.0"
 paths:
-  /api/v1/faq:
+  /api/v1/answer:
     get:
       consumes:
       - application/json
@@ -46,33 +59,12 @@ paths:
           description: OK
           schema:
             items:
-              $ref: '#/definitions/models.Faq'
+              $ref: '#/definitions/models.Answer'
             type: array
       summary: Get a list to all questions and answers from API
       tags:
       - faq
-    post:
-      consumes:
-      - application/json
-      description: Create a new Question and Answer with the input paylod
-      parameters:
-      - description: Create
-        in: body
-        name: faq
-        required: true
-        schema:
-          $ref: '#/definitions/models.FaqRequest'
-      produces:
-      - application/json
-      responses:
-        "200":
-          description: OK
-          schema:
-            $ref: '#/definitions/models.Faq'
-      summary: Create a new Question and Answer item
-      tags:
-      - faq
-  /api/v1/faq/{id}:
+  /api/v1/answer/{id}:
     delete:
       consumes:
       - application/json
@@ -107,7 +99,7 @@ paths:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.Faq'
+            $ref: '#/definitions/models.Answer'
       summary: Get one question and answer item from the API
       tags:
       - faq
@@ -126,7 +118,130 @@ paths:
         name: faq
         required: true
         schema:
-          $ref: '#/definitions/models.Faq'
+          $ref: '#/definitions/models.Answer'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: ObjectIdHex(id), was successful updated!
+      summary: Update a new Question and Answer item
+      tags:
+      - faq
+  /api/v1/faq:
+    post:
+      consumes:
+      - application/json
+      description: Create a new Question and Answer with the input paylod
+      parameters:
+      - description: Create
+        in: body
+        name: faq
+        required: true
+        schema:
+          $ref: '#/definitions/models.Answer'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Answer'
+      summary: Create a new Question and Answer item
+      tags:
+      - faq
+  /api/v1/question:
+    get:
+      consumes:
+      - application/json
+      description: Get a list of all questions and answers
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/models.Question'
+            type: array
+      summary: Get a list to all questions and answers from API
+      tags:
+      - faq
+    post:
+      consumes:
+      - application/json
+      description: Create a new Question and Answer with the input paylod
+      parameters:
+      - description: Create
+        in: body
+        name: faq
+        required: true
+        schema:
+          $ref: '#/definitions/models.Question'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Question'
+      summary: Create a new Question and Answer item
+      tags:
+      - faq
+  /api/v1/question/{id}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete a question and answer
+      parameters:
+      - description: ObjectId
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: 'result: success'
+      summary: Delete one question and answer item from the API
+      tags:
+      - faq
+    get:
+      consumes:
+      - application/json
+      description: Get a question and answer
+      parameters:
+      - description: ObjectId
+        in: path
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/models.Question'
+      summary: Get one question and answer item from the API
+      tags:
+      - faq
+    put:
+      consumes:
+      - application/json
+      description: Update a new Question and Answer with the input paylod
+      parameters:
+      - description: ObjectId
+        in: path
+        name: id
+        required: true
+        type: string
+      - description: Update
+        in: body
+        name: faq
+        required: true
+        schema:
+          $ref: '#/definitions/models.Question'
       produces:
       - application/json
       responses:

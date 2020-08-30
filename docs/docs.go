@@ -32,7 +32,7 @@ var doc = `{
     "host": "{{.Host}}",
     "basePath": "{{.BasePath}}",
     "paths": {
-        "/api/v1/faq": {
+        "/api/v1/answer": {
             "get": {
                 "description": "Get a list of all questions and answers",
                 "consumes": [
@@ -51,46 +51,14 @@ var doc = `{
                         "schema": {
                             "type": "array",
                             "items": {
-                                "$ref": "#/definitions/models.Faq"
+                                "$ref": "#/definitions/models.Answer"
                             }
-                        }
-                    }
-                }
-            },
-            "post": {
-                "description": "Create a new Question and Answer with the input paylod",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "faq"
-                ],
-                "summary": "Create a new Question and Answer item",
-                "parameters": [
-                    {
-                        "description": "Create",
-                        "name": "faq",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/models.FaqRequest"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.Faq"
                         }
                     }
                 }
             }
         },
-        "/api/v1/faq/{id}": {
+        "/api/v1/answer/{id}": {
             "get": {
                 "description": "Get a question and answer",
                 "consumes": [
@@ -116,7 +84,7 @@ var doc = `{
                     "200": {
                         "description": "OK",
                         "schema": {
-                            "$ref": "#/definitions/models.Faq"
+                            "$ref": "#/definitions/models.Answer"
                         }
                     }
                 }
@@ -147,7 +115,194 @@ var doc = `{
                         "in": "body",
                         "required": true,
                         "schema": {
-                            "$ref": "#/definitions/models.Faq"
+                            "$ref": "#/definitions/models.Answer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ObjectIdHex(id), was successful updated!"
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete a question and answer",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "faq"
+                ],
+                "summary": "Delete one question and answer item from the API",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ObjectId",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "result: success"
+                    }
+                }
+            }
+        },
+        "/api/v1/faq": {
+            "post": {
+                "description": "Create a new Question and Answer with the input paylod",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "faq"
+                ],
+                "summary": "Create a new Question and Answer item",
+                "parameters": [
+                    {
+                        "description": "Create",
+                        "name": "faq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Answer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Answer"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/question": {
+            "get": {
+                "description": "Get a list of all questions and answers",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "faq"
+                ],
+                "summary": "Get a list to all questions and answers from API",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/models.Question"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "Create a new Question and Answer with the input paylod",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "faq"
+                ],
+                "summary": "Create a new Question and Answer item",
+                "parameters": [
+                    {
+                        "description": "Create",
+                        "name": "faq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Question"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Question"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/question/{id}": {
+            "get": {
+                "description": "Get a question and answer",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "faq"
+                ],
+                "summary": "Get one question and answer item from the API",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ObjectId",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Question"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Update a new Question and Answer with the input paylod",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "faq"
+                ],
+                "summary": "Update a new Question and Answer item",
+                "parameters": [
+                    {
+                        "type": "string",
+                        "description": "ObjectId",
+                        "name": "id",
+                        "in": "path",
+                        "required": true
+                    },
+                    {
+                        "description": "Update",
+                        "name": "faq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Question"
                         }
                     }
                 ],
@@ -187,31 +342,49 @@ var doc = `{
         }
     },
     "definitions": {
-        "models.Faq": {
+        "models.Answer": {
             "type": "object",
             "properties": {
                 "answer": {
-                    "type": "string",
-                    "example": "To remove an item click on RemoveItem button"
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/models.Answer"
+                    }
                 },
                 "id": {
                     "type": "string",
+                    "example": "7f484f697ee1283a0ca5a028"
+                },
+                "likes": {
+                    "type": "integer",
+                    "example": 10
+                },
+                "parent": {
+                    "type": "string",
                     "example": "5f484f697ee3881a0ca9a037"
                 },
-                "question": {
+                "text": {
                     "type": "string",
                     "example": "How can I remove an item?"
                 }
             }
         },
-        "models.FaqRequest": {
+        "models.Question": {
             "type": "object",
             "properties": {
-                "answer": {
+                "id": {
                     "type": "string",
-                    "example": "To remove an item click on RemoveItem button"
+                    "example": "5f484f697ee3881a0ca9a037"
                 },
-                "question": {
+                "image": {
+                    "type": "string",
+                    "example": "http://nuorder.com/images/image.jpg"
+                },
+                "likes": {
+                    "type": "integer",
+                    "example": 30
+                },
+                "text": {
                     "type": "string",
                     "example": "How can I remove an item?"
                 }

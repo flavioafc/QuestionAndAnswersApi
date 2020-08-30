@@ -11,7 +11,7 @@ require (
 	github.com/mailru/easyjson v0.7.6 // indirect
 	github.com/pdrum/swagger-automation v0.0.0-20190629163613-c8c7c80ba858
 	github.com/programadriano/go-restapi v0.0.0-20180908024225-2a481ceb5992 // indirect
-	github.com/swaggo/http-swagger v0.0.0-20200308142732-58ac5e232fba // indirect
+	github.com/swaggo/http-swagger v0.0.0-20200308142732-58ac5e232fba
 	github.com/swaggo/swag v1.6.7
 	github.com/urfave/cli/v2 v2.2.0 // indirect
 	golang.org/x/net v0.0.0-20200822124328-c89045814202 // indirect

@@ -1,4 +1,4 @@
-package faqrouter
+package router
 
 import (
 	"encoding/json"
@@ -10,17 +10,9 @@ import (
 	"gopkg.in/mgo.v2/bson"
 )
 
-var dao = FaqDAO{}
+var question_dao = QuestionDAO{}
 
-func respondWithError(w http.ResponseWriter, code int, msg string) {
-	respondWithJSON(w, code, map[string]string{"error": msg})
-}
-
-func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
-	response, _ := json.Marshal(payload)
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(code)
-	w.Write(response)
+type QuestionRouter struct {
 }
 
 // GetAll godoc
@@ -29,11 +21,11 @@ func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
 // @Tags faq
 // @Accept  json
 // @Produce  json
-// @Success 200 {array} models.Faq
-// @Router /api/v1/faq [get]
+// @Success 200 {array} models.Question
+// @Router /api/v1/question [get]
 // GetAll list all questions and answers from QA API
-func GetAll(w http.ResponseWriter, r *http.Request) {
-	faq, err := dao.GetAll()
+func (q *QuestionRouter) GetAll(w http.ResponseWriter, r *http.Request) {
+	faq, err := question_dao.GetAll()
 	if err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
@@ -48,12 +40,12 @@ func GetAll(w http.ResponseWriter, r *http.Request) {
 // @Accept  json
 // @Produce  json
 // @Param id path string true "ObjectId"
-// @Success 200 {object} models.Faq
-// @Router /api/v1/faq/{id} [get]
+// @Success 200 {object} models.Question
+// @Router /api/v1/question/{id} [get]
 // GetByID retrieve the question and answer by Id
-func GetByID(w http.ResponseWriter, r *http.Request) {
+func (q *QuestionRouter) GetByID(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
-	faq, err := dao.GetByID(params["id"])
+	faq, err := question_dao.GetByID(params["id"])
 	if err != nil {
 		respondWithError(w, http.StatusBadRequest, "Invalid QA ID")
 		return
@@ -67,20 +59,20 @@ func GetByID(w http.ResponseWriter, r *http.Request) {
 // @Tags faq
 // @Accept  json
 // @Produce  json
-// @Param faq body models.FaqRequest true "Create"
-// @Success 200 {object} models.Faq
-// @Router /api/v1/faq [post]
+// @Param faq body models.Question true "Create"
+// @Success 200 {object} models.Question
+// @Router /api/v1/question [post]
 // Create method insert in the mongo database a new question and answer
-func Create(w http.ResponseWriter, r *http.Request) {
+func (q *QuestionRouter) Create(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
-	var faq Faq
+	var faq Question
 
 	if err := json.NewDecoder(r.Body).Decode(&faq); err != nil {
 		respondWithError(w, http.StatusBadRequest, "Invalid request")
 		return
 	}
 	faq.ID = bson.NewObjectId()
-	if err := dao.Create(faq); err != nil {
+	if err := question_dao.Create(faq); err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -94,20 +86,20 @@ func Create(w http.ResponseWriter, r *http.Request) {
 // @Accept  json
 // @Produce  json
 // @Param id path string true "ObjectId"
-// @Param faq body models.Faq true "Update"
+// @Param faq body models.Question true "Update"
 // @Success 200 "ObjectIdHex(id), was successful updated!"
-// @Router /api/v1/faq/{id} [put]
+// @Router /api/v1/question/{id} [put]
 // Update have to update the question
-func Update(w http.ResponseWriter, r *http.Request) {
+func (q *QuestionRouter) Update(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	params := mux.Vars(r)
 
-	var faq Faq
+	var faq Question
 	if err := json.NewDecoder(r.Body).Decode(&faq); err != nil {
 		respondWithError(w, http.StatusBadRequest, "Invalid request")
 		return
 	}
-	if err := dao.Update(params["id"], faq); err != nil {
+	if err := question_dao.Update(params["id"], faq); err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
@@ -122,12 +114,12 @@ func Update(w http.ResponseWriter, r *http.Request) {
 // @Produce  json
 // @Param id path string true "ObjectId"
 // @Success 200 "result: success"
-// @Router /api/v1/faq/{id} [delete]
+// @Router /api/v1/question/{id} [delete]
 // Delete must delete the question
-func Delete(w http.ResponseWriter, r *http.Request) {
+func (q *QuestionRouter) Delete(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
 	params := mux.Vars(r)
-	if err := dao.Delete(params["id"]); err != nil {
+	if err := question_dao.Delete(params["id"]); err != nil {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}

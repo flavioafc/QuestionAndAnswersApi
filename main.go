@@ -12,7 +12,9 @@ import (
 	httpSwagger "github.com/swaggo/http-swagger"
 )
 
-var dao = FaqDAO{}
+var dao = DAO{}
+var questionRouter = faqRouter.QuestionRouter{}
+var answerRouter = faqRouter.AnswerRouter{}
 
 func init() {
 	dao.Server = "localhost"
@@ -33,12 +35,18 @@ func init() {
 func main() {
 
 	router := mux.NewRouter()
-	router.HandleFunc("/api/v1/faq", faqRouter.GetAll).Methods("GET")
-	router.HandleFunc("/api/v1/faq/{id}", faqRouter.GetByID).Methods("GET")
-	router.HandleFunc("/api/v1/faq", faqRouter.Create).Methods("POST")
-	router.HandleFunc("/api/v1/faq/{id}", faqRouter.Update).Methods("PUT")
-	router.HandleFunc("/api/v1/faq/{id}", faqRouter.Delete).Methods("DELETE")
+
+	//Questions
+	router.HandleFunc("/api/v1/question", questionRouter.GetAll).Methods("GET")
+	router.HandleFunc("/api/v1/question/{id}", questionRouter.GetByID).Methods("GET")
+	router.HandleFunc("/api/v1/question", questionRouter.Create).Methods("POST")
+	router.HandleFunc("/api/v1/question/{id}", questionRouter.Update).Methods("PUT")
+	router.HandleFunc("/api/v1/question/{id}", questionRouter.Delete).Methods("DELETE")
 	router.PathPrefix("/swagger").Handler(httpSwagger.WrapHandler)
+
+	//Answers
+	router.HandleFunc("/api/v1/answer", answerRouter.Create).Methods("POST")
+	router.HandleFunc("/api/v1/answer/{idquestion}", answerRouter.GetAll).Methods("GET")
 
 	var port = ":3000"
 	fmt.Println("Server running in port:", port)
