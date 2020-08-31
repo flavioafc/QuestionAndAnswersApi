@@ -3,7 +3,7 @@ MVP Restful API written in Go
 
 
 Basic Requirements: 
- - Windows 10 or Linux
+ - Windows 10 or Linux Ubuntu 14.xx.x or above
  - MongoDB 4.0 or above
  - Golang 1.13
  - Docker 19.x.x
@@ -25,7 +25,7 @@ Setting up the service:
 	URL: http://localhost:3000/swagger/index.html
 
 4 - Missing, could be improved to the next releases:
-	More Unit and Integration Tests
+	It is needed near 100% of Tests Coverage
 	Run the application in docker container
 	Prepare the application to be managed by kubernets with docker
 	Caching

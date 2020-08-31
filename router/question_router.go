@@ -46,8 +46,16 @@ func (q *QuestionRouter) GetAll(w http.ResponseWriter, r *http.Request) {
 func (q *QuestionRouter) GetByID(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	faq, err := question_dao.GetByID(params["id"])
+
 	if err != nil {
-		respondWithError(w, http.StatusBadRequest, "Invalid Question ID")
+
+		switch err.Error() {
+		case "not found":
+			respondWithError(w, http.StatusNotFound, err.Error())
+		default:
+			respondWithError(w, http.StatusBadRequest, err.Error())
+		}
+
 		return
 	}
 	respondWithJSON(w, http.StatusOK, faq)

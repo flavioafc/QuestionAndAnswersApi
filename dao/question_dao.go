@@ -1,6 +1,8 @@
 package dao
 
 import (
+	"errors"
+
 	. "github.com/flavioafc/go-question-and-answers/models"
 	"gopkg.in/mgo.v2/bson"
 )
@@ -19,6 +21,11 @@ func (m *QuestionDAO) GetAll() ([]Question, error) {
 
 func (m *QuestionDAO) GetByID(id string) (Question, error) {
 	var faq Question
+
+	if !bson.IsObjectIdHex(id) {
+		return faq, errors.New("Invalid input to ObjectIdHex")
+	}
+
 	err := db.C(COLLECTION_QUESTION).FindId(bson.ObjectIdHex(id)).One(&faq)
 	return faq, err
 }
