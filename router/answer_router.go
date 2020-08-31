@@ -16,14 +16,14 @@ type AnswerRouter struct {
 var answer_dao = AnswerDAO{}
 
 // GetAll godoc
-// @Summary Get a list to all questions and answers from API
-// @Description Get a list of all questions and answers
-// @Tags faq
+// @Summary Get all answers from a specific Question
+// @Description Get a list of all answers from a question
+// @Tags Answer
 // @Accept  json
 // @Produce  json
 // @Success 200 {array} models.Answer
-// @Router /api/v1/answer [get]
-// GetAll list all questions and answers from QA API
+// @Router /api/v1/answer/{idquestion} [get]
+// GetAll list all answers from QA API
 func (a *AnswerRouter) GetAll(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 
@@ -39,8 +39,8 @@ func (a *AnswerRouter) GetAll(w http.ResponseWriter, r *http.Request) {
 
 // GetByID godoc
 // @Summary Get one answer item from the API
-// @Description Get and answer by ID
-// @Tags faq
+// @Description Get an answer by ID
+// @Tags Answer
 // @Accept  json
 // @Produce  json
 // @Param id path string true "ObjectId"
@@ -51,7 +51,7 @@ func (a *AnswerRouter) GetByID(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	faq, err := answer_dao.GetByID(params["id"])
 	if err != nil {
-		respondWithError(w, http.StatusBadRequest, "Invalid QA ID")
+		respondWithError(w, http.StatusBadRequest, "Invalid Answer ID")
 		return
 	}
 	respondWithJSON(w, http.StatusOK, faq)
@@ -60,12 +60,14 @@ func (a *AnswerRouter) GetByID(w http.ResponseWriter, r *http.Request) {
 // Create godoc
 // @Summary Create a new Answer item
 // @Description Create a new Answer with the input paylod
-// @Tags faq
+// @Description The root is the question ID
+// @Description The Parent field is the ID of another question that will be answered
+// @Tags Answer
 // @Accept  json
 // @Produce  json
-// @Param faq body models.Answer true "Create"
+// @Param faq body models.AnswerRequest true "Create"
 // @Success 200 {object} models.Answer
-// @Router /api/v1/answer/{idparent} [post]
+// @Router /api/v1/answer [post]
 // Create method insert in the mongo database a new question and answer
 func (a *AnswerRouter) Create(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
@@ -86,7 +88,7 @@ func (a *AnswerRouter) Create(w http.ResponseWriter, r *http.Request) {
 // Update godoc
 // @Summary Update a new Question and Answer item
 // @Description Update a new Question and Answer with the input paylod
-// @Tags faq
+// @Tags Answer
 // @Accept  json
 // @Produce  json
 // @Param id path string true "ObjectId"
@@ -113,7 +115,7 @@ func (a *AnswerRouter) Update(w http.ResponseWriter, r *http.Request) {
 // Delete godoc
 // @Summary Delete one question and answer item from the API
 // @Description Delete a question and answer
-// @Tags faq
+// @Tags Answer
 // @Accept  json
 // @Produce  json
 // @Param id path string true "ObjectId"

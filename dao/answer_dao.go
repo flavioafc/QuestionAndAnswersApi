@@ -29,6 +29,7 @@ func (m *AnswerDAO) GetAll(id string) ([]*Answer, error) {
 		node := &Answer{
 			ID:     item.ID,
 			Text:   item.Text,
+			Root:   item.Root,
 			Parent: item.Parent,
 			Likes:  item.Likes,
 			Answer: item.Answer,

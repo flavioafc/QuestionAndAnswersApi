@@ -22,9 +22,11 @@ func init() {
 	dao.Connect()
 }
 
-// @title FAQ API
+// @title FAQ RESTful Service API
 // @version 1.0
-// @description This is a MVP for Questions and Answers for https://www.nuorder.com/ page
+// @description This is a MVP for Questions and Answers for https://www.nuorder.com/ page.
+// @description Install MongoDB to test this service or use Docker executing Compose up in docker-compose.yml in the project folder check the CLI for reference in https://docs.docker.com/compose/reference/up/
+// @description If executing this service by VS Code, just click on right button on docker-compose.yml and Compose Up
 // @termsOfService https://www.nuorder.com/
 // @contact.name NuOrder API Support
 // @contact.email flavio.costa@ecore.com.br
@@ -42,11 +44,17 @@ func main() {
 	router.HandleFunc("/api/v1/question", questionRouter.Create).Methods("POST")
 	router.HandleFunc("/api/v1/question/{id}", questionRouter.Update).Methods("PUT")
 	router.HandleFunc("/api/v1/question/{id}", questionRouter.Delete).Methods("DELETE")
-	router.PathPrefix("/swagger").Handler(httpSwagger.WrapHandler)
 
 	//Answers
 	router.HandleFunc("/api/v1/answer", answerRouter.Create).Methods("POST")
 	router.HandleFunc("/api/v1/answer/{idquestion}", answerRouter.GetAll).Methods("GET")
+	router.HandleFunc("/api/v1/answer/{id}", answerRouter.GetByID).Methods("GET")
+	router.HandleFunc("/api/v1/answer/{id}", answerRouter.Update).Methods("PUT")
+	router.HandleFunc("/api/v1/answer/{id}", answerRouter.Delete).Methods("DELETE")
+
+	//Swagger
+	//Address: http://localhost:3000/swagger/index.html
+	router.PathPrefix("/swagger").Handler(httpSwagger.WrapHandler)
 
 	var port = ":3000"
 	fmt.Println("Server running in port:", port)

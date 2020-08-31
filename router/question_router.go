@@ -16,9 +16,9 @@ type QuestionRouter struct {
 }
 
 // GetAll godoc
-// @Summary Get a list to all questions and answers from API
-// @Description Get a list of all questions and answers
-// @Tags faq
+// @Summary Get a list to all questions from the API
+// @Description Get a list of all questions
+// @Tags Question
 // @Accept  json
 // @Produce  json
 // @Success 200 {array} models.Question
@@ -36,7 +36,7 @@ func (q *QuestionRouter) GetAll(w http.ResponseWriter, r *http.Request) {
 // GetByID godoc
 // @Summary Get one question and answer item from the API
 // @Description Get a question and answer
-// @Tags faq
+// @Tags Question
 // @Accept  json
 // @Produce  json
 // @Param id path string true "ObjectId"
@@ -47,7 +47,7 @@ func (q *QuestionRouter) GetByID(w http.ResponseWriter, r *http.Request) {
 	params := mux.Vars(r)
 	faq, err := question_dao.GetByID(params["id"])
 	if err != nil {
-		respondWithError(w, http.StatusBadRequest, "Invalid QA ID")
+		respondWithError(w, http.StatusBadRequest, "Invalid Question ID")
 		return
 	}
 	respondWithJSON(w, http.StatusOK, faq)
@@ -56,7 +56,7 @@ func (q *QuestionRouter) GetByID(w http.ResponseWriter, r *http.Request) {
 // Create godoc
 // @Summary Create a new Question and Answer item
 // @Description Create a new Question and Answer with the input paylod
-// @Tags faq
+// @Tags Question
 // @Accept  json
 // @Produce  json
 // @Param faq body models.Question true "Create"
@@ -82,7 +82,7 @@ func (q *QuestionRouter) Create(w http.ResponseWriter, r *http.Request) {
 // Update godoc
 // @Summary Update a new Question and Answer item
 // @Description Update a new Question and Answer with the input paylod
-// @Tags faq
+// @Tags Question
 // @Accept  json
 // @Produce  json
 // @Param id path string true "ObjectId"
@@ -109,7 +109,7 @@ func (q *QuestionRouter) Update(w http.ResponseWriter, r *http.Request) {
 // Delete godoc
 // @Summary Delete one question and  all answers items from the API
 // @Description Delete a question and all the answers
-// @Tags faq
+// @Tags Question
 // @Accept  json
 // @Produce  json
 // @Param id path string true "ObjectId"

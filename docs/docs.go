@@ -33,8 +33,8 @@ var doc = `{
     "basePath": "{{.BasePath}}",
     "paths": {
         "/api/v1/answer": {
-            "get": {
-                "description": "Get a list of all questions and answers",
+            "post": {
+                "description": "Create a new Answer with the input paylod\nThe root is the question ID\nThe Parent field is the ID of another question that will be answered",
                 "consumes": [
                     "application/json"
                 ],
@@ -42,9 +42,43 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "faq"
+                    "Answer"
                 ],
-                "summary": "Get a list to all questions and answers from API",
+                "summary": "Create a new Answer item",
+                "parameters": [
+                    {
+                        "description": "Create",
+                        "name": "faq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.AnswerRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Answer"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/answer/{idquestion}": {
+            "get": {
+                "description": "Get a list of all answers from a question",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "Answer"
+                ],
+                "summary": "Get all answers from a specific Question",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -58,43 +92,9 @@ var doc = `{
                 }
             }
         },
-        "/api/v1/answer/{idparent}": {
-            "post": {
-                "description": "Create a new Answer with the input paylod",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "faq"
-                ],
-                "summary": "Create a new Answer item",
-                "parameters": [
-                    {
-                        "description": "Create",
-                        "name": "faq",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/models.Answer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.Answer"
-                        }
-                    }
-                }
-            }
-        },
         "/api/v1/answer/{id}": {
             "get": {
-                "description": "Get and answer by ID",
+                "description": "Get an answer by ID",
                 "consumes": [
                     "application/json"
                 ],
@@ -102,7 +102,7 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "faq"
+                    "Answer"
                 ],
                 "summary": "Get one answer item from the API",
                 "parameters": [
@@ -132,7 +132,7 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "faq"
+                    "Answer"
                 ],
                 "summary": "Update a new Question and Answer item",
                 "parameters": [
@@ -168,7 +168,7 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "faq"
+                    "Answer"
                 ],
                 "summary": "Delete one question and answer item from the API",
                 "parameters": [
@@ -189,7 +189,7 @@ var doc = `{
         },
         "/api/v1/question": {
             "get": {
-                "description": "Get a list of all questions and answers",
+                "description": "Get a list of all questions",
                 "consumes": [
                     "application/json"
                 ],
@@ -197,9 +197,9 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "faq"
+                    "Question"
                 ],
-                "summary": "Get a list to all questions and answers from API",
+                "summary": "Get a list to all questions from the API",
                 "responses": {
                     "200": {
                         "description": "OK",
@@ -221,7 +221,7 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "faq"
+                    "Question"
                 ],
                 "summary": "Create a new Question and Answer item",
                 "parameters": [
@@ -255,7 +255,7 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "faq"
+                    "Question"
                 ],
                 "summary": "Get one question and answer item from the API",
                 "parameters": [
@@ -285,7 +285,7 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "faq"
+                    "Question"
                 ],
                 "summary": "Update a new Question and Answer item",
                 "parameters": [
@@ -321,7 +321,7 @@ var doc = `{
                     "application/json"
                 ],
                 "tags": [
-                    "faq"
+                    "Question"
                 ],
                 "summary": "Delete one question and  all answers items from the API",
                 "parameters": [
@@ -351,6 +351,31 @@ var doc = `{
                         "$ref": "#/definitions/models.Answer"
                     }
                 },
+                "id": {
+                    "type": "string",
+                    "example": "7f484f697ee1283a0ca5a028"
+                },
+                "likes": {
+                    "type": "integer",
+                    "example": 10
+                },
+                "parent": {
+                    "type": "string",
+                    "example": "5f484f697ee3881a0ca9a037"
+                },
+                "root": {
+                    "type": "string",
+                    "example": "5f484f697ee3881a0ca9a037"
+                },
+                "text": {
+                    "type": "string",
+                    "example": "How can I remove an item?"
+                }
+            }
+        },
+        "models.AnswerRequest": {
+            "type": "object",
+            "properties": {
                 "id": {
                     "type": "string",
                     "example": "7f484f697ee1283a0ca5a028"
@@ -412,8 +437,8 @@ var SwaggerInfo = swaggerInfo{
 	Host:        "localhost:3000",
 	BasePath:    "/",
 	Schemes:     []string{},
-	Title:       "FAQ API",
-	Description: "This is a MVP for Questions and Answers for https://www.nuorder.com/ page",
+	Title:       "FAQ RESTful Service API",
+	Description: "This is a MVP for Questions and Answers for https://www.nuorder.com/ page.\nInstall MongoDB to test this service or use Docker executing Compose up in docker-compose.yml in the project folder check the CLI for reference in https://docs.docker.com/compose/reference/up/\nIf executing this service by VS Code, just click on right button on docker-compose.yml and Compose Up",
 }
 
 type s struct{}

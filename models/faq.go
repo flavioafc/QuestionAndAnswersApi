@@ -25,13 +25,7 @@ type Answer struct {
 	Parent bson.ObjectId `bson:"parent" json:"parent" example:"5f484f697ee3881a0ca9a037"`
 	Text   string        `bson:"text" json:"text" example:"How can I remove an item?"`
 	Likes  int           `bson:"likes" json:"likes" example:"10"`
-	Answer []*Answer     `bson:"answer" json:"answer,omitempty" example:
-	"{
-		"_id" : ObjectId("5f4a6a037ee388453cc5aa4b"),
-		"parent" : ObjectId("5f4c120c8413c9c01f002e3a"),
-		"text" : "My answer for your response  is",
-		"likes" : 0
-	}"`
+	Answer []*Answer     `bson:"answer" json:"answer,omitempty"`
 }
 
 type FaqRequest struct {

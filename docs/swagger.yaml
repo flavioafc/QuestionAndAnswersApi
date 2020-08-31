@@ -22,6 +22,24 @@ definitions:
         example: How can I remove an item?
         type: string
     type: object
+  models.AnswerRequest:
+    properties:
+      id:
+        example: 7f484f697ee1283a0ca5a028
+        type: string
+      likes:
+        example: 10
+        type: integer
+      parent:
+        example: 5f484f697ee3881a0ca9a037
+        type: string
+      root:
+        example: 5f484f697ee3881a0ca9a037
+        type: string
+      text:
+        example: How can I remove an item?
+        type: string
+    type: object
   models.Question:
     properties:
       id:
@@ -42,31 +60,42 @@ info:
   contact:
     email: flavio.costa@ecore.com.br
     name: NuOrder API Support
-  description: This is a MVP for Questions and Answers for https://www.nuorder.com/ page
+  description: |-
+    This is a MVP for Questions and Answers for https://www.nuorder.com/ page.
+    Install MongoDB to test this service or use Docker executing Compose up in docker-compose.yml in the project folder check the CLI for reference in https://docs.docker.com/compose/reference/up/
+    If executing this service by VS Code, just click on right button on docker-compose.yml and Compose Up
   license:
     name: Apache 2.0
     url: https://www.nuorder.com/licenses/LICENSE-2.0.html
   termsOfService: https://www.nuorder.com/
-  title: FAQ API
+  title: FAQ RESTful Service API
   version: "1.0"
 paths:
   /api/v1/answer:
-    get:
+    post:
       consumes:
       - application/json
-      description: Get a list of all questions and answers
+      description: |-
+        Create a new Answer with the input paylod
+        The root is the question ID
+        The Parent field is the ID of another question that will be answered
+      parameters:
+      - description: Create
+        in: body
+        name: faq
+        required: true
+        schema:
+          $ref: '#/definitions/models.AnswerRequest'
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            items:
-              $ref: '#/definitions/models.Answer'
-            type: array
-      summary: Get a list to all questions and answers from API
+            $ref: '#/definitions/models.Answer'
+      summary: Create a new Answer item
       tags:
-      - faq
+      - Answer
   /api/v1/answer/{id}:
     delete:
       consumes:
@@ -85,11 +114,11 @@ paths:
           description: 'result: success'
       summary: Delete one question and answer item from the API
       tags:
-      - faq
+      - Answer
     get:
       consumes:
       - application/json
-      description: Get and answer by ID
+      description: Get an answer by ID
       parameters:
       - description: ObjectId
         in: path
@@ -105,7 +134,7 @@ paths:
             $ref: '#/definitions/models.Answer'
       summary: Get one answer item from the API
       tags:
-      - faq
+      - Answer
     put:
       consumes:
       - application/json
@@ -129,34 +158,29 @@ paths:
           description: ObjectIdHex(id), was successful updated!
       summary: Update a new Question and Answer item
       tags:
-      - faq
-  /api/v1/answer/{idparent}:
-    post:
+      - Answer
+  /api/v1/answer/{idquestion}:
+    get:
       consumes:
       - application/json
-      description: Create a new Answer with the input paylod
-      parameters:
-      - description: Create
-        in: body
-        name: faq
-        required: true
-        schema:
-          $ref: '#/definitions/models.Answer'
+      description: Get a list of all answers from a question
       produces:
       - application/json
       responses:
         "200":
           description: OK
           schema:
-            $ref: '#/definitions/models.Answer'
-      summary: Create a new Answer item
+            items:
+              $ref: '#/definitions/models.Answer'
+            type: array
+      summary: Get all answers from a specific Question
       tags:
-      - faq
+      - Answer
   /api/v1/question:
     get:
       consumes:
       - application/json
-      description: Get a list of all questions and answers
+      description: Get a list of all questions
       produces:
       - application/json
       responses:
@@ -166,9 +190,9 @@ paths:
             items:
               $ref: '#/definitions/models.Question'
             type: array
-      summary: Get a list to all questions and answers from API
+      summary: Get a list to all questions from the API
       tags:
-      - faq
+      - Question
     post:
       consumes:
       - application/json
@@ -189,7 +213,7 @@ paths:
             $ref: '#/definitions/models.Question'
       summary: Create a new Question and Answer item
       tags:
-      - faq
+      - Question
   /api/v1/question/{id}:
     delete:
       consumes:
@@ -208,7 +232,7 @@ paths:
           description: 'result: success'
       summary: Delete one question and  all answers items from the API
       tags:
-      - faq
+      - Question
     get:
       consumes:
       - application/json
@@ -228,7 +252,7 @@ paths:
             $ref: '#/definitions/models.Question'
       summary: Get one question and answer item from the API
       tags:
-      - faq
+      - Question
     put:
       consumes:
       - application/json
@@ -252,5 +276,5 @@ paths:
           description: ObjectIdHex(id), was successful updated!
       summary: Update a new Question and Answer item
       tags:
-      - faq
+      - Question
 swagger: "2.0"
