@@ -31,5 +31,5 @@ Setting up the service:
 	Caching
 	Resiliency
 
-5 - For unit testing, type the command line in the terminal, informed below:
+5 - For unit and integration tests, type the command line in the terminal, informed below:
 	go test -v
