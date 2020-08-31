@@ -15,6 +15,9 @@ definitions:
       parent:
         example: 5f484f697ee3881a0ca9a037
         type: string
+      root:
+        example: 5f484f697ee3881a0ca9a037
+        type: string
       text:
         example: How can I remove an item?
         type: string
@@ -86,7 +89,7 @@ paths:
     get:
       consumes:
       - application/json
-      description: Get a question and answer
+      description: Get and answer by ID
       parameters:
       - description: ObjectId
         in: path
@@ -100,7 +103,7 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.Answer'
-      summary: Get one question and answer item from the API
+      summary: Get one answer item from the API
       tags:
       - faq
     put:
@@ -127,11 +130,11 @@ paths:
       summary: Update a new Question and Answer item
       tags:
       - faq
-  /api/v1/faq:
+  /api/v1/answer/{idparent}:
     post:
       consumes:
       - application/json
-      description: Create a new Question and Answer with the input paylod
+      description: Create a new Answer with the input paylod
       parameters:
       - description: Create
         in: body
@@ -146,7 +149,7 @@ paths:
           description: OK
           schema:
             $ref: '#/definitions/models.Answer'
-      summary: Create a new Question and Answer item
+      summary: Create a new Answer item
       tags:
       - faq
   /api/v1/question:
@@ -191,7 +194,7 @@ paths:
     delete:
       consumes:
       - application/json
-      description: Delete a question and answer
+      description: Delete a question and all the answers
       parameters:
       - description: ObjectId
         in: path
@@ -203,7 +206,7 @@ paths:
       responses:
         "200":
           description: 'result: success'
-      summary: Delete one question and answer item from the API
+      summary: Delete one question and  all answers items from the API
       tags:
       - faq
     get:

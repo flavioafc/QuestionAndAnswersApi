@@ -58,9 +58,9 @@ var doc = `{
                 }
             }
         },
-        "/api/v1/answer/{id}": {
-            "get": {
-                "description": "Get a question and answer",
+        "/api/v1/answer/{idparent}": {
+            "post": {
+                "description": "Create a new Answer with the input paylod",
                 "consumes": [
                     "application/json"
                 ],
@@ -70,7 +70,41 @@ var doc = `{
                 "tags": [
                     "faq"
                 ],
-                "summary": "Get one question and answer item from the API",
+                "summary": "Create a new Answer item",
+                "parameters": [
+                    {
+                        "description": "Create",
+                        "name": "faq",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/models.Answer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/models.Answer"
+                        }
+                    }
+                }
+            }
+        },
+        "/api/v1/answer/{id}": {
+            "get": {
+                "description": "Get and answer by ID",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "faq"
+                ],
+                "summary": "Get one answer item from the API",
                 "parameters": [
                     {
                         "type": "string",
@@ -149,40 +183,6 @@ var doc = `{
                 "responses": {
                     "200": {
                         "description": "result: success"
-                    }
-                }
-            }
-        },
-        "/api/v1/faq": {
-            "post": {
-                "description": "Create a new Question and Answer with the input paylod",
-                "consumes": [
-                    "application/json"
-                ],
-                "produces": [
-                    "application/json"
-                ],
-                "tags": [
-                    "faq"
-                ],
-                "summary": "Create a new Question and Answer item",
-                "parameters": [
-                    {
-                        "description": "Create",
-                        "name": "faq",
-                        "in": "body",
-                        "required": true,
-                        "schema": {
-                            "$ref": "#/definitions/models.Answer"
-                        }
-                    }
-                ],
-                "responses": {
-                    "200": {
-                        "description": "OK",
-                        "schema": {
-                            "$ref": "#/definitions/models.Answer"
-                        }
                     }
                 }
             }
@@ -313,7 +313,7 @@ var doc = `{
                 }
             },
             "delete": {
-                "description": "Delete a question and answer",
+                "description": "Delete a question and all the answers",
                 "consumes": [
                     "application/json"
                 ],
@@ -323,7 +323,7 @@ var doc = `{
                 "tags": [
                     "faq"
                 ],
-                "summary": "Delete one question and answer item from the API",
+                "summary": "Delete one question and  all answers items from the API",
                 "parameters": [
                     {
                         "type": "string",
@@ -360,6 +360,10 @@ var doc = `{
                     "example": 10
                 },
                 "parent": {
+                    "type": "string",
+                    "example": "5f484f697ee3881a0ca9a037"
+                },
+                "root": {
                     "type": "string",
                     "example": "5f484f697ee3881a0ca9a037"
                 },

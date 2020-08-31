@@ -2,6 +2,7 @@ package dao
 
 import (
 	. "github.com/flavioafc/go-question-and-answers/models"
+	"gopkg.in/mgo.v2"
 	"gopkg.in/mgo.v2/bson"
 )
 
@@ -65,7 +66,7 @@ func (m *AnswerDAO) GetByID(id string) (Answer, error) {
 	return faq, err
 }
 
-func (m *AnswerDAO) Create(faq Answer) error {
+func (m *AnswerDAO) Create(faq AnswerRequest) error {
 	err := db.C(COLLECTION_ANSWER).Insert(&faq)
 	return err
 }
@@ -73,6 +74,11 @@ func (m *AnswerDAO) Create(faq Answer) error {
 func (m *AnswerDAO) Delete(id string) error {
 	err := db.C(COLLECTION_ANSWER).RemoveId(bson.ObjectIdHex(id))
 	return err
+}
+
+func (m *AnswerDAO) DeleteRelatedByRoot(idRoot string) (*mgo.ChangeInfo, error) {
+	result, err := db.C(COLLECTION_ANSWER).RemoveAll(bson.M{"parent": bson.ObjectIdHex(idRoot)})
+	return result, err
 }
 
 func (m *AnswerDAO) Update(id string, faq Answer) error {

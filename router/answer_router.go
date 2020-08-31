@@ -38,8 +38,8 @@ func (a *AnswerRouter) GetAll(w http.ResponseWriter, r *http.Request) {
 }
 
 // GetByID godoc
-// @Summary Get one question and answer item from the API
-// @Description Get a question and answer
+// @Summary Get one answer item from the API
+// @Description Get and answer by ID
 // @Tags faq
 // @Accept  json
 // @Produce  json
@@ -58,18 +58,18 @@ func (a *AnswerRouter) GetByID(w http.ResponseWriter, r *http.Request) {
 }
 
 // Create godoc
-// @Summary Create a new Question and Answer item
-// @Description Create a new Question and Answer with the input paylod
+// @Summary Create a new Answer item
+// @Description Create a new Answer with the input paylod
 // @Tags faq
 // @Accept  json
 // @Produce  json
 // @Param faq body models.Answer true "Create"
 // @Success 200 {object} models.Answer
-// @Router /api/v1/faq [post]
+// @Router /api/v1/answer/{idparent} [post]
 // Create method insert in the mongo database a new question and answer
 func (a *AnswerRouter) Create(w http.ResponseWriter, r *http.Request) {
 	defer r.Body.Close()
-	var faq Answer
+	var faq AnswerRequest
 
 	if err := json.NewDecoder(r.Body).Decode(&faq); err != nil {
 		respondWithError(w, http.StatusBadRequest, "Invalid request")

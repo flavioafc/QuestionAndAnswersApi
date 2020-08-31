@@ -107,8 +107,8 @@ func (q *QuestionRouter) Update(w http.ResponseWriter, r *http.Request) {
 }
 
 // Delete godoc
-// @Summary Delete one question and answer item from the API
-// @Description Delete a question and answer
+// @Summary Delete one question and  all answers items from the API
+// @Description Delete a question and all the answers
 // @Tags faq
 // @Accept  json
 // @Produce  json
@@ -123,5 +123,12 @@ func (q *QuestionRouter) Delete(w http.ResponseWriter, r *http.Request) {
 		respondWithError(w, http.StatusInternalServerError, err.Error())
 		return
 	}
+
+	_, err := answer_dao.DeleteRelatedByRoot(params["id"])
+	if err != nil {
+		respondWithError(w, http.StatusInternalServerError, err.Error())
+		return
+	}
+
 	respondWithJSON(w, http.StatusOK, map[string]string{"result": "success"})
 }
