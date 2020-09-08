@@ -33,7 +33,6 @@ func (a *AnswerRouter) GetAll(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	answer_dao.ClearMemory()
 	respondWithJSON(w, http.StatusOK, faq)
 }
 
