@@ -30,7 +30,7 @@ func checkResponseCode(t *testing.T, expected, actual int) {
 	}
 }
 func TestGetQuestionByInvalidObjectID(t *testing.T) {
-	req, _ := http.NewRequest("GET", "/api/v1/question/abcdef", nil)
+	req, _ := http.NewRequest("GET", "/api/v1/question/invalidobjectid", nil)
 	response := executeRequest(req)
 	checkResponseCode(t, http.StatusBadRequest, response.Code)
 
@@ -77,7 +77,7 @@ func TestCreateQuestion(t *testing.T) {
 	}
 }
 func TestGetQuestionByID(t *testing.T) {
-	req, _ := http.NewRequest("GET", "/api/v1/question/5f4d7d597ee3883cb88f8365", nil)
+	req, _ := http.NewRequest("GET", "/api/v1/question/5f4a68c17ee3884ed8168759", nil)
 	response := executeRequest(req)
 	checkResponseCode(t, http.StatusOK, response.Code)
 }
