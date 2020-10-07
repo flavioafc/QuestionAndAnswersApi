@@ -7,7 +7,7 @@ import (
 type Question struct {
 	ID    bson.ObjectId `bson:"_id" json:"id" example:"5f484f697ee3881a0ca9a037"`
 	Text  string        `bson:"text" json:"text" example:"How can I remove an item?"`
-	Image string        `bson:"image" json:"image" example:"http://nuorder.com/images/image.jpg"`
+	Image string        `bson:"image" json:"image" example:"http://example.com/images/image.jpg"`
 	Likes int           `bson:"likes" json:"likes" example:"30"`
 }
 

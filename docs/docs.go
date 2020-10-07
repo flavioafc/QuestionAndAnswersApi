@@ -18,14 +18,14 @@ var doc = `{
     "info": {
         "description": "{{.Description}}",
         "title": "{{.Title}}",
-        "termsOfService": "https://www.nuorder.com/",
+        "termsOfService": "https://www.example.com/",
         "contact": {
-            "name": "NuOrder API Support",
+            "name": "example API Support",
             "email": "flavio.costa@ecore.com.br"
         },
         "license": {
             "name": "Apache 2.0",
-            "url": "https://www.nuorder.com/licenses/LICENSE-2.0.html"
+            "url": "https://www.example.com/licenses/LICENSE-2.0.html"
         },
         "version": "{{.Version}}"
     },
@@ -407,7 +407,7 @@ var doc = `{
                 },
                 "image": {
                     "type": "string",
-                    "example": "http://nuorder.com/images/image.jpg"
+                    "example": "http://example.com/images/image.jpg"
                 },
                 "likes": {
                     "type": "integer",
@@ -438,7 +438,7 @@ var SwaggerInfo = swaggerInfo{
 	BasePath:    "/",
 	Schemes:     []string{},
 	Title:       "FAQ RESTful Service API",
-	Description: "This is a MVP for Questions and Answers for https://www.nuorder.com/ page.\nInstall MongoDB to test this service or use Docker executing Compose up in docker-compose.yml in the project folder check the CLI for reference in https://docs.docker.com/compose/reference/up/\nIf executing this service by VS Code, just click on right button on docker-compose.yml and Compose Up",
+	Description: "This is a MVP for Questions and Answers for https://www.example.com/ page.\nInstall MongoDB to test this service or use Docker executing Compose up in docker-compose.yml in the project folder check the CLI for reference in https://docs.docker.com/compose/reference/up/\nIf executing this service by VS Code, just click on right button on docker-compose.yml and Compose Up",
 }
 
 type s struct{}
