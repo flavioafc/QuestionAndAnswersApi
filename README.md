@@ -34,5 +34,5 @@ Setting up the service:
 5 - For unit and integration tests, type the command line in the terminal, informed below:
 	go test -v
 
-6 - Swagger Update
-	- $ swag init 
+6 - Swagger Update:
+ - $ swag init
