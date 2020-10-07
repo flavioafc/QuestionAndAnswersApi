@@ -35,4 +35,4 @@ Setting up the service:
 	go test -v
 
 6 - Swagger Update
-	$ swag init 
+	- $ swag init 
